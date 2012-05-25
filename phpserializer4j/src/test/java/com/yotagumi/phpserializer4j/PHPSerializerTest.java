@@ -34,7 +34,7 @@ public class PHPSerializerTest {
     @Test
     public void test_serialize_String() {
         assertThat(target.serialize("Yotama"), is("s:6:\"Yotama\";"));
-        assertThat(target.serialize("与太組"), is("s:9:\"与太組\";"));
+        assertThat(target.serialize("与太組"), is("s:" + "与太組".getBytes().length + ":\"与太組\";"));
     }
 
     @Test
