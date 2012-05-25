@@ -1,4 +1,5 @@
 target/*
+phpserializer4j/target/*
 
 *.class
 
