@@ -1,6 +1,6 @@
-target/*
 phpserializer4j/target/*
 phpserializer4j/build/*
+phpserializer4j/.gradle/*
 
 *.class
 
