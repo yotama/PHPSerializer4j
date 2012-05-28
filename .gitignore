@@ -1,5 +1,6 @@
 target/*
 phpserializer4j/target/*
+phpserializer4j/build/*
 
 *.class
 
