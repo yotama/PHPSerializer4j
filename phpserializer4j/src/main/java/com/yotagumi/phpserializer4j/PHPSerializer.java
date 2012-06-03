@@ -178,6 +178,7 @@ public class PHPSerializer {
 
         for (PropertyDescriptor descriptor : targetDescriptor) {
             Method readMethod = descriptor.getReadMethod();
+            readMethod.setAccessible(true);
             Object property = null;
             try {
                 property = readMethod.invoke(object, new Object[] {});
