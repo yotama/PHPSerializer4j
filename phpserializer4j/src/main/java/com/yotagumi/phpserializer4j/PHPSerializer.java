@@ -50,8 +50,7 @@ public class PHPSerializer {
             serializeMap((Map<?, ?>) object, result);
         } else if (object instanceof List) {
             serializeList((List<?>) object, result);
-        } else if (object instanceof int[] || object instanceof long[] || object instanceof byte[] || object instanceof short[]
-                || object instanceof double[] || object instanceof float[] || object instanceof Object[]) {
+        } else if (object.getClass().isArray()) {
             serializeArray(object, result);
         } else {
             serializeBean(object, result);
@@ -132,7 +131,7 @@ public class PHPSerializer {
 
         result.append("}");
     }
-    
+
     /**
      * Serialize array
      * 
@@ -185,19 +184,19 @@ public class PHPSerializer {
             } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
                 e.printStackTrace();
             }
-            
+
             String propertyName = null;
             PHPSerializeHint hintAnnotation = readMethod.getAnnotation(PHPSerializeHint.class);
             if (hintAnnotation != null) {
                 propertyName = hintAnnotation.name();
             } else {
-               propertyName = descriptor.getName();
+                propertyName = descriptor.getName();
             }
-            
+
             result.append("s:").append(propertyName.length()).append(":\"").append(propertyName).append("\";");
             serializeCore(property, result);
         }
-        
+
         result.append("}");
     }
 }
