@@ -132,4 +132,37 @@ public class PHPSerializerTest {
 
         assertThat(target.serialize(dto), is("a:2:{s:3:\"age\";i:28;s:4:\"name\";s:6:\"Yotama\";}"));
     }
+
+    @Test
+    public void test_serialize_bean_with_hint() {
+        class TestBean {
+            private String noHint;
+            private String methodHint;
+            
+            @SuppressWarnings("unused")
+            public String getNoHint() {
+                return noHint;
+            }
+            
+            public void setNoHint(String noHint) {
+                this.noHint = noHint;
+            }
+            
+            @SuppressWarnings("unused")
+            @PHPSerializeHint(name = "M_HINT")
+            public String getMethodHint() {
+                return methodHint;
+            }
+            
+            public void setMethodHint(String methodHint) {
+                this.methodHint = methodHint;
+            }
+        }
+        
+        TestBean dto = new TestBean();
+        dto.setNoHint("valueNoHint");
+        dto.setMethodHint("valueMethodHint");
+
+        assertThat(target.serialize(dto), is("a:2:{s:6:\"M_HINT\";s:15:\"valueMethodHint\";s:6:\"noHint\";s:11:\"valueNoHint\";}"));
+    }
 }

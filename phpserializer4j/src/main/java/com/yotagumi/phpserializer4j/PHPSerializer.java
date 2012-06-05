@@ -185,7 +185,15 @@ public class PHPSerializer {
             } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
                 e.printStackTrace();
             }
-            String propertyName = descriptor.getName();
+            
+            String propertyName = null;
+            PHPSerializeHint hintAnnotation = readMethod.getAnnotation(PHPSerializeHint.class);
+            if (hintAnnotation != null) {
+                propertyName = hintAnnotation.name();
+            } else {
+               propertyName = descriptor.getName();
+            }
+            
             result.append("s:").append(propertyName.length()).append(":\"").append(propertyName).append("\";");
             serializeCore(property, result);
         }
