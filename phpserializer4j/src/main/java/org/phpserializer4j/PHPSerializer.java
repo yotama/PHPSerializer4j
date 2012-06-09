@@ -1,4 +1,4 @@
-package com.yotagumi.phpserializer4j;
+package org.phpserializer4j;
 
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Array;
