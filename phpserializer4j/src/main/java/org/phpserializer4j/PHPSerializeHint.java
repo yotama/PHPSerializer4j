@@ -24,4 +24,10 @@ public @interface PHPSerializeHint {
      */
     public String name() default "";
 
+    /**
+     * Exclude from serialization.
+     * 
+     * @return
+     */
+    public boolean ignore() default false;
 }

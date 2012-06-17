@@ -169,6 +169,10 @@ public class PHPSerializer {
             if (readMethod.getDeclaringClass() == Object.class) {
                 continue;
             }
+            PHPSerializeHint hint = readMethod.getAnnotation(PHPSerializeHint.class);
+            if (hint != null && hint.ignore()) {
+                continue;
+            }
             propertyCount++;
             targetDescriptor.add(descriptor);
         }
@@ -186,9 +190,14 @@ public class PHPSerializer {
             }
 
             String propertyName = null;
-            PHPSerializeHint hintAnnotation = readMethod.getAnnotation(PHPSerializeHint.class);
-            if (hintAnnotation != null) {
-                propertyName = hintAnnotation.name();
+            PHPSerializeHint hint = readMethod.getAnnotation(PHPSerializeHint.class);
+            if (hint != null) {
+                if (hint.ignore()) {
+                    continue;
+                }
+                if(hint.name() != null && hint.name().length() > 0) {
+                    propertyName = hint.name();
+                }
             } else {
                 propertyName = descriptor.getName();
             }
