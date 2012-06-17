@@ -138,6 +138,7 @@ public class PHPSerializerTest {
         class TestBean {
             private String noHint;
             private String methodHint;
+            private String ignoreProp;
             
             @SuppressWarnings("unused")
             public String getNoHint() {
@@ -157,11 +158,22 @@ public class PHPSerializerTest {
             public void setMethodHint(String methodHint) {
                 this.methodHint = methodHint;
             }
+
+            @SuppressWarnings("unused")
+            @PHPSerializeHint(ignore = true)
+            public String getIgnoreProp() {
+                return ignoreProp;
+            }
+            
+            public void setIgnoreProp(String ignoreProp) {
+                this.ignoreProp = ignoreProp;
+            }
         }
         
         TestBean dto = new TestBean();
         dto.setNoHint("valueNoHint");
         dto.setMethodHint("valueMethodHint");
+        dto.setIgnoreProp("maybeIgnore");
 
         assertThat(target.serialize(dto), is("a:2:{s:6:\"M_HINT\";s:15:\"valueMethodHint\";s:6:\"noHint\";s:11:\"valueNoHint\";}"));
     }
